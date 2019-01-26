@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<title>DUCK HUNT</title>
+	<link rel="stylesheet" href="assets/styles/reset.css">
+	<link rel="stylesheet" href="assets/styles/style.css">
+
+</head>
+<body>
+	<div id="wrapper" class="wrapper">
+
+		<div id="background" class="foot"></div>
+		<div class="tree gs"></div>
+
+		<div id ="dog" class="dog gs"></div>
+        <div id="duck" class="duck gs"></div>
+        <div id="duck2" class="duck2 gs"></div>
+	</div>
+<script>
+
+    var dogShow = document.getElementById("wrapper");
+    var dog = document.getElementById("dog");
+
+    var duck = document.getElementById('duck');
+    var duck2 = document.getElementById('duck2');
+
+    var duckTemp =  getComputedStyle(duck);
+    var duck2Temp =  getComputedStyle(duck2);
+    var duckClass = null;
+    var duck2Class = null;
+    var duckX = parseInt(duckTemp.left);
+    var duckY = parseInt(duckTemp.bottom);
+    var duck2X = parseInt(duck2Temp.left);
+    var duck2Y = parseInt(duck2Temp.bottom);
+
+    dogShow.addEventListener("click", dogWalk);
+
+    function dogWalk() {
+        dog.classList.add("dog_walk");
+
+        dogShow.removeEventListener("click", dogWalk);
+
+        dog.addEventListener("transitionend", dogJump);
+    }
+
+    function dogJump(){
+        dog.classList.remove("dog_walk");
+        dog.classList.add("dog_jump");
+        dog.addEventListener("animationend", duckFly);
+    }
+
+    function duckFly() {
+        duck.classList.add("duck_fly");
+        duck2.classList.add("duck2_fly");
+        setTimeout(duckTraectory, 300);
+       setInterval(duckTraectory, 2000);
+        setTimeout(duck2Traectory, 300);
+        setInterval(duck2Traectory, 2000);
+    }
+
+    duck.addEventListener('click', shot);
+    duck2.addEventListener('click', shot2);
+
+    ///Альтернативноерешение с абсолютными координатами///
+	/*function absoluteFly () {
+       var maxWidth = window.outerWidth;
+       var maxHeight = window.outerHeight;
+       var previousFlightX = duck.offsetLeft;
+       var previousFlightY = duck.offsetBottom;
+
+        var absoluteFlyDiceX = Math.floor((Math.random() * 15 +1);
+        var absoluteFlyDiceY = Math.floor((Math.random() * 10) +1);
+        var minFlight = 100;
+        	var flyX = minFlight * absoluteFlyDiceX;
+        	var flyY = minFlight * absoluteFlyDiceY;
+
+			if ( flyX > maxWidth ) {
+				flyX = maxWidth
+				return flyX;
+		}
+    		if ( flyY > maxHeight ) {
+				 flyY = maxHeight
+                return flyY;
+		}
+
+        var	directionX = flyX - previousFlightX;
+		var directionY = flyY - previousFlightY;
+
+			if (directionY > 0 && directionY >= directionX ) {
+				if (directionX > 0) {
+				duckClass = 'duck_fly_top_right';
+				}
+				else {
+				    duckClass = 'duck_fly_top_left';
+				}
+		}
+        	if (directionY < 0 && directionY <= directionX ) {
+            	if (directionX > 0) {
+
+                    duckClass = 'duck_fly_top_right';
+				}
+				else {
+					duckClass = 'duck_fly_top_left';
+				}
+    }
+			if (directionX > 0 && directionY <= directionX ) {
+				if (directionX > 0) {
+					duckClass = 'duck_fly_top_right';
+				}
+				else {
+					duckClass = 'duck_fly_top_left';
+				}
+			}
+			if (directionY < 0 && directionY <= directionX ) {
+				if (directionX > 0) {
+
+					duckClass = 'duck_fly_top_right';
+				}
+				else {
+					duckClass = 'duck_fly_top_left';
+				}
+			}*/
+
+    function duckTraectory () {
+        var directionDice = Math.floor(Math.random() * 6);
+        var x = 1;
+        var y = 1;
+        var minLength = 100;
+
+        duck.classList.remove(duckClass);
+        switch (directionDice) {
+            case 0:
+                duckClass = "duck_fly_left";
+                x = -1;
+                y = 0;
+                break;
+            case 1:
+                duckClass = "duck_fly_right";
+                x = 1;
+                y = 0;
+                break;
+            case 2:
+                duckClass = "duck_fly_top_left";
+                x = -1;
+                y = 1;
+                break;
+            case 3:
+                duckClass = "duck_fly_down_left";
+                x = -1;
+                y = -1;
+                break;
+            case 4:
+                duckClass = "duck_fly_top_right";
+                x = 1;
+                y = 1;
+                break;
+            case 5:
+                duckClass = "duck_fly_down_right";
+                x = 1;
+                y = -1;
+                break;
+        }
+
+
+        var lengthDice = Math.floor((Math.random() * 6) + 1);
+
+        if (duck.offsetLeft < 0 &&  duck.offsetTop > window.innerHeight && x === -1 && y === -1) {
+            x = x*(-1);
+            y = y*(-1);
+            lengthDice = 8;
+            duckClass = "duck_fly_up_right";
+        }
+
+        else if (duck.offsetLeft < 0 &&  duck.offsetTop < 0 && x === -1 && y === 1) {
+            x = x * (-1);
+            y = y * (-1);
+            lengthDice = 8;
+            duckClass = "duck_fly_down_right";
+        }
+
+        else if (duck.offsetLeft > window.innerWidth &&  duck.offsetTop < 0 && x === 1 && y === 1) {
+            x = x * (-1);
+            y = y * (-1);
+            lengthDice = 8;
+            duckClass = "duck_fly_down_left";
+        }
+
+        else if (duck.offsetLeft < window.innerWidth &&  duck.offsetTop > window.innerHeight && x === 1 && y === -1) {
+            x = x * (-1);
+            y = y * (-1);
+            lengthDice = 8;
+            duckClass = "duck_fly_up_left";
+        }
+
+        else if (duck.offsetTop < 0 && y === -1) {
+            y = y * (-1);
+            lengthDice = 6;
+            duckClass = "duck_fly_down_left";
+        }
+        else if (duck.offsetLeft < 0 && x === -1) {
+            x = x*(-1);
+            lengthDice = 6;
+            duckClass = "duck_fly_right";
+        }
+
+        else if (duck.offsetLeft > window.innerWidth && x === 1) {
+            x = x*(-1);
+            lengthDice = 6;
+            duckClass = "duck_fly_left";
+        }
+        else if (duck.offsetTop > window.innerHeight && y === 1) {
+            y = y*(-1);
+            lengthDice = 6;
+            duckClass = "duck_fly_up_left";
+        }
+
+        duck.classList.add(duckClass);
+
+        var moveX = lengthDice * minLength * x;
+        var moveY = lengthDice * minLength * y *0.7;
+
+
+        duckX = moveX + duckX;
+        duckY = moveY + duckY;
+
+
+        duck.style.left = duckX + "px";
+        duck.style.bottom = duckY + "px";
+
+    }
+
+    function duck2Traectory () {
+        var directionDice2 = Math.floor(Math.random() * 6);
+
+        var x2 = 1;
+        var y2 = 1;
+        var minLength2 = 100;
+
+        duck2.classList.remove(duck2Class);
+
+        switch (directionDice2) {
+            case 0:
+                duck2Class = "duck2_fly_left";
+                x2 = -1;
+                y2 = 0;
+                break;
+            case 1:
+                duck2Class = "duck2_fly_right";
+                x2 = 1;
+                y2 = 0;
+                break;
+            case 2:
+                duck2Class = "duck2_fly_top_left";
+                x2 = -1;
+                y2 = 1;
+                break;
+            case 3:
+                duck2Class = "duck2_fly_down_left";
+                x2 = -1;
+                y2 = -1;
+                break;
+            case 4:
+                duck2Class = "duck2_fly_top_right";
+                x2 = 1;
+                y2 = 1;
+                break;
+            case 5:
+                duck2Class = "duck2_fly_down_right";
+                x2 = 1;
+                y2 = -1;
+                break;
+        }
+
+        duck2.classList.add(duck2Class);
+
+
+        var length2Dice = Math.floor((Math.random() * 6) + 1);
+
+        if (duck2.offsetLeft < 0 &&  duck2.offsetTop > window.innerHeight && x2 === -1 && y2 === -1) {
+            x2 = x2*(-1);
+            y2 = y2*(-1);
+            length2Dice = 8;
+            duck2Class = "duck2_fly_up_right";
+        }
+
+        else if (duck2.offsetLeft < 0 &&  duck2.offsetTop < 0 && x2 === -1 && y2 === 1) {
+            x2 = x2 * (-1);
+            y2 = y2 * (-1);
+            length2Dice = 8;
+            duck2Class = "duck2_fly_down_right";
+        }
+
+        else if (duck2.offsetLeft > window.innerWidth &&  duck2.offsetTop < 0 && x2 === 1 && y2 === 1) {
+            x2 = x2 * (-1);
+            y2 = y2 * (-1);
+            length2Dice = 8;
+            duck2Class = "duck2_fly_down_left";
+        }
+
+        else if (duck2.offsetLeft < window.innerWidth &&  duck2.offsetTop > window.innerHeight && x2 === 1 && y2 === -1) {
+            x2 = x2 * (-1);
+            y2 = y2 * (-1);
+            length2Dice = 8;
+            duck2Class = "duck2_fly_up_left";
+        }
+
+        else if (duck2.offsetTop < 0 && y2 === -1) {
+            y2 = y2 * (-1);
+            length2Dice = 6;
+            duck2Class = "duck2_fly_down_left";
+        }
+        else if (duck.offsetLeft < 0 && x2 === -1) {
+            x2 = x2 * (-1);
+            lengthDice = 6;
+            duck2Class = "duck2_fly_right";
+        }
+
+        else if (duck2.offsetLeft > window.innerWidth && x2 === 1) {
+            x2 = x2 * (-1);
+            length2Dice = 6;
+            duck2Class = "duck2_fly_left";
+        }
+        else if (duck2.offsetTop > window.innerHeight && y2 === 1) {
+            y2 = y2 * (-1);
+            length2Dice = 6;
+            duck2Class = "duck2_fly_up_left";
+        }
+
+        var move2X = length2Dice * minLength2 * x2;
+        var move2Y = length2Dice * minLength2 * y2;
+
+        duck2X = move2X + duck2X;
+        duck2Y = move2Y + duck2Y;
+
+        duck2.style.left = duck2X + "px";
+        duck2.style.bottom = duck2Y + "px";
+    }
+//функция попадания по утке1
+    function shot () {
+        duck.classList.remove(duckClass);
+        duck.classList.add('duck_shot');
+        duck.style.bottom = 100 + 'px';
+        clearInterval(duckTraectory);
+
+       setTimeout(function () {duck.classList.remove('duck_shot')}, 2000);
+        setTimeout(duckTraectory, 3000);
+    }
+    //функция попадания по утке2
+    function shot2 () {
+        duck2.classList.remove(duck2Class);
+        duck2.classList.add('duck2_shot');
+        duck2.style.bottom = 100 + 'px';
+        clearInterval(duck2Traectory);
+
+        setTimeout(function () {duck2.classList.remove('duck2_shot')}, 2000);
+        setTimeout(duck2Traectory, 3000);
+    }
+
+    duck.addEventListener('click', shot);
+    duck2.addEventListener('click', shot2);
+
+</script>
+
+</body>
+</html>
