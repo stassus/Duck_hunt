@@ -166,10 +166,10 @@ html {overflow: hidden;}
   animation-name: duck-fly-top-right;
 }
 .duck_fly_down_right {
-  animation-name: duck-fly-top-right;
+  animation-name: duck-fly-right;
 }
 .duck_fly_down_left {
-  animation-name: duck-fly-top-left;
+  animation-name: duck-fly-left;
 }
 .duck_shot {
   animation-name: duck-shot;
@@ -281,6 +281,12 @@ html {overflow: hidden;}
   animation-timing-function: steps(1, end);
   animation-delay: 0s;
 }
+.duck2_shot {
+  animation-duration: 0.3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: steps(1, end);
+  animation-delay: 0s;
+}
 .duck2_fly_left {
   animation-name: duck2-fly-left;
 }
@@ -299,8 +305,8 @@ html {overflow: hidden;}
 .duck2_fly_down_left {
   animation-name: duck2-fly-top-left;
 }
-.duck_shot {
-  animation-name: duck-shot;
+.duck2_shot {
+  animation-name: duck2-shot;
 }
 @keyframes duck2-fly-left {
   0% {
@@ -372,36 +378,36 @@ html {overflow: hidden;}
 }
 @keyframes duck2-fly-down-right {
   0% {
-    width: 74px;
-    height: 95px;
-    background-position: -218px -292px;
+    width: 102px;
+    height: 72px;
+    background-position: -680px -319px;
   }
   50% {
     width: 104px;
-    height: 95px;
-    background-position: -323px -298px;
+    height: 61px;
+    background-position: -818px -328px;
   }
   100% {
-    width: 74px;
-    height: 95px;
-    background-position: -218px -292px;
+    width: 102px;
+    height: 72px;
+    background-position: -680px -319px;
   }
 }
 @keyframes duck2-fly-down-left {
   0% {
-    width: 74px;
-    height: 95px;
-    background-position: -116px -292px;
+    width: 102px;
+    height: 72px;
+    background-position: -542px -319px;
   }
   50% {
     width: 104px;
-    height: 95px;
-    background-position: -434px -298px;
+    height: 61px;
+    background-position: -956px -328px;
   }
   100% {
-    width: 74px;
-    height: 95px;
-    background-position: -116px -292px;
+    width: 102px;
+    height: 72px;
+    background-position: -542px -319px;
   }
 }
 @keyframes duck2-shot {
