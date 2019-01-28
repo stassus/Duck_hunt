@@ -24,6 +24,34 @@ html {overflow: hidden;}
   background: url('../img/bg.png') 0 0 repeat-x;
   z-index: 100;
 }
+/*.cloud {
+  position: absolute;
+  bottom: 800px;
+  left: 1000px;
+  width: 280px;
+  height: 410px;
+  background: url('../img/gs3.png');
+  background-position: -130 px -400px;
+}
+
+.human {
+  position: absolute;
+  bottom: 100px;
+  left: 100px;
+  width: 280px;
+  height: 410px;
+  background: url('../img/gs3.png');
+  background-position: -130 px -600px;
+}
+.bush {
+  position: absolute;
+  bottom: 140px;
+  left: 900px;
+  width: 280px;
+  height: 410px;
+  background: url('../img/gs3.png');
+  background-position: -734px -600px;
+}*/
 .tree {
   position: absolute;
   bottom: 140px;
