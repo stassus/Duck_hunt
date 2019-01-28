@@ -357,11 +357,11 @@
         duck2.classList.remove(duck2Class);
         duck2.classList.add('duck2_shot');
         duck2.style.bottom = 100 + 'px';
-        duck.style.transition = `bottom ${1}s linear`;
+        duck2.style.transition = `bottom ${1}s linear`;
         clearInterval(duck2IntervalId);
 
         setTimeout(function () {duck2.classList.remove('duck2_shot')}, 1800);
-        duckIntervalId = setInterval(duckTraectory, 2000);
+        duck2IntervalId = setInterval(duck2Traectory, 2000);
     }
 
     duck.addEventListener('click', shot);
